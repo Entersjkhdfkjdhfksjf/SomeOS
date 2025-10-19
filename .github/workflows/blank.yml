@@ -15,12 +15,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run build command
-        run: ./build-linux.sh
-
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+        run: sudo bash build-linux.sh
 
       - name: Zip repository
         run: |
