@@ -17,19 +17,34 @@ jobs:
       - name: Run build command
         run: ./build-linux.sh
 
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
       - name: Zip repository
         run: |
-          zip -r build-artifact.zip .
+          zip -r repo-build.zip .
 
-      - name: Create GitHub Release
+      - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v2
-        with:
-          name: "Build - ${{ github.run_number }}"
-          tag_name: "build-${{ github.run_number }}"
-          body: "Automated build from workflow run #${{ github.run_number }}"
-          draft: false
-          prerelease: false
-          files: build-artifact.zip
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: build-${{ github.run_number }}
+          release_name: Build ${{ github.run_number }}
+          body: Automated build from workflow run
+          draft: false
+          prerelease: false
+
+      - name: Upload release assets (repo-build)
+        id: upload_release_assets_repo
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: repo-build.zip
+          asset_name: repo-build.zip
+          asset_content_type: application/zip
