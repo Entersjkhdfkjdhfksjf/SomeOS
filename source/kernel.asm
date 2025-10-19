@@ -13,6 +13,8 @@
 	CPU 386				; pusha offsets depends on a 386 or better
 					; FS and GS require a 386 or better
 
+    %include 'mouse.lib'
+	call mouselib_setup
 	%DEFINE MIKEOS_VER '5.X.X'	; OS version number
 	%DEFINE MIKEOS_API_VER 18	; API version for programs to check
 
@@ -390,7 +392,6 @@ not_bas_extension:
 	%INCLUDE "features/sound.asm"
 	%INCLUDE "features/string.asm"
 	%INCLUDE "features/basic.asm"
-    %INCLUDE "features/mouse2.asm"
 
 ; ==================================================================
 ; END OF KERNEL
