@@ -5,8 +5,9 @@
 ; COMMAND LINE INTERFACE
 ; ==================================================================
 
-
+%include 'mouse.lib'
 os_command_line:
+	call mouselib_setup
 	call os_clear_screen
 
 	mov si, version_msg
