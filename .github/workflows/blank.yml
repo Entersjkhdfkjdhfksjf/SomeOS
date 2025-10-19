@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run build command
+        run: ./build-linux.sh
+
+      - name: Zip repository
+        run: |
+          zip -r build-artifact.zip .
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Build - ${{ github.run_number }}"
+          tag_name: "build-${{ github.run_number }}"
+          body: "Automated build from workflow run #${{ github.run_number }}"
+          draft: false
+          prerelease: false
+          files: build-artifact.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
