@@ -390,7 +390,7 @@ not_bas_extension:
 	%INCLUDE "features/sound.asm"
 	%INCLUDE "features/string.asm"
 	%INCLUDE "features/basic.asm"
-        %INCLUDE "features/mouse.asm"
+    %INCLUDE "features/mouse2.asm"
 
 ; ==================================================================
 ; END OF KERNEL
